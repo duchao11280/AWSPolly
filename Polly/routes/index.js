@@ -7,10 +7,10 @@ var router = express.Router();
 
 //Tao client polly
 const Polly = new AWS.Polly({
-  region: 'us-east-1',
-  secretAccessKey: '4996rxZWt5krkmVfeOWF37VuA7m1G+COT8rWGFdB',
-  accessKeyId: 'ASIAV5BA3TBHKJIJ7YH2', 
-  sessionToken: 'FwoGZXIvYXdzEBQaDHdGloo8M0Jtam7uVCLPAZrt4iA0ybv9W3IgjBx7T6MptLTJwBgFNI/tb/n6BfN4Hd2cloqxHqFfVDl9C1fM9jsvv79pVSksT7tan/W+lwm9adUgF6Iixu3UeJT47bQ1K4tZF2f8ni3z4Krvx+41VWryJn3hZRQXVY7gsU8quuEhtKlEDB16fTxRdp149BKPIcZDa/u8ORUcRKp/QwWqiJlRy+KaJnVgOVIdUzeixuBLfmAkgvNpxUqk2MuNUKNkGeWYo6imvTnucoAhBtSkXHVW17VpnF6WroZTsvRQwCjZ2NiMBjItGGUeGCs1SrWwyUCUEulK7NiUp8DLhV5Ix4WfMQwSu4rQf1X9132jK+AWiDkT'
+  region: AWS.config.credentials.region,
+  secretAccessKey: AWS.config.credentials.secretAccessKey,
+  accessKeyId: AWS.config.credentials.accessKeyId, 
+  sessionToken: AWS.config.credentials.sessionToken
 })
 
 /* GET home page. */
