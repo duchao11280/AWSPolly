@@ -4,7 +4,16 @@ const fs = require('fs')
 const path = require('path');
 var router = express.Router();
 
-
+AWS.config.getCredentials(function(err) {
+	if (err) console.log(err.stack);
+	// credentials not loaded
+	else {
+	  console.log("Access key:", AWS.config.credentials.region);
+	  console.log("Access key:", AWS.config.credentials.secretAccessKey);
+	  console.log("Access key:", AWS.config.credentials.accessKeyId);
+	  console.log("Access key:", AWS.config.credentials.sessionToken);
+	}
+});
 //Tao client polly
 const Polly = new AWS.Polly({
   region: AWS.config.credentials.region,
