@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polly</title>
+</head>
+<body>
+    <div class="container">
+        <div style="background-color: tomato; height: 50px; text-align: center; ">
+            <div>Chuyển đổi text thành giọng nói</div>
+        </div>
+        <table>
+            <tbody>
+                <td>
+                    <textarea id='textconvert' rows="8" cols="50"></textarea>
+                </td>
+                <td>
+                    <button onclick="convert()">Convert</button>
+                </td>
+            </tbody>
+        </table>
+        <table border="1">
+            <thead>
+                <td style="width: 280px; text-align: center;">
+                    Văn bản
+                </td>
+                <td style="width: 100px; text-align: center;">
+                    Giọng nói
+                </td>
+
+            </thead>
+            <tbody>
+
+                <td style="word-wrap:break-word"></td>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function convert(){
+            var text = document.getElementById("textconvert").value;
+            console.log(text);
+        }
+    </script>
+</body>
+</html>
