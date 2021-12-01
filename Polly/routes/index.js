@@ -4,30 +4,21 @@ const fs = require('fs')
 const path = require('path');
 var router = express.Router();
 
-AWS.config.getCredentials(function(err) {
-	if (err) console.log(err.stack);
-	// credentials not loaded
-	else {
-	  console.log("Access key:", AWS.config.credentials.region);
-	  console.log("Access key:", AWS.config.credentials.secretAccessKey);
-	  console.log("Access key:", AWS.config.credentials.accessKeyId);
-	  console.log("Access key:", AWS.config.credentials.sessionToken);
-	}
-});
+
 //Tao client polly
 const Polly = new AWS.Polly({
-  region: AWS.config.credentials.region,
-  secretAccessKey: AWS.config.credentials.secretAccessKey,
-  accessKeyId: AWS.config.credentials.accessKeyId, 
-  sessionToken: AWS.config.credentials.sessionToken
+	region: 'us-east-1',
+	secretAccessKey: '2COvy0j3HiX8ofJkFHH0Tql+1CrREJIidowVheyA',
+	accessKeyId: 'ASIAQLGDQYLX2X3XYJHE',
+	sessionToken: 'FwoGZXIvYXdzEEkaDMkli4mpVbdoQecJBSLPARSnQxqsOugHaPxL0H1C4/e1iHbu+agkdw7+B3OAqBC71NFYrg1UHpOAKqg0YWzsHSr+Rsk7/DQT1O14zepY/QbP/BNjwTN4+sgzHzpW5EUG1/0jY4SxB6oaEFqhcgWWOQPd7rplA2uES7GLEdOqLAjSQb7TsugxbCBL5pZ0LxbzasvAfsqpdPOtCJ/9ZyUvNnlFUfnusYstJnqu4jb6ZcIBJXy8OEFiGj2x/+EfhkedIfMjE5Kn2+3KWVNuRSjcmssEPjSIe5i171xHARu5qijjz5yNBjItGNPcMc5LqfvoDgLt8/b0mnRdnoaLAaIojRQMbJ0sO//HBc39KXgL9LdXueLS'
 })
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
 	res.render('index');
 
 });
-router.get('/voice/:fileName', function(req, res){
+router.get('/voice/:fileName', function (req, res) {
 	res.sendFile(path.join(__dirname, '../voice', req.params.fileName))
 })
 router.post("/convert", function (req, res) {
@@ -39,7 +30,7 @@ router.post("/convert", function (req, res) {
 	}
 	Polly.synthesizeSpeech(data, (err, data) => {
 		if (err) {
-			res.json({message: "Chuyển đổi thất bại."})
+			res.json({ message: "Chuyển đổi thất bại." })
 			return;
 		}
 		if (data.AudioStream instanceof Buffer) {
@@ -50,15 +41,14 @@ router.post("/convert", function (req, res) {
 					res.status(500).send(fsErr);
 					return;
 				}
-				else{
-					res.json({urlVoice:`${fileName}.mp3`})
+				else {
+					res.json({ urlVoice: `${fileName}.mp3` })
 
 				}
 			})
 		}
 	})
 })
-
 
 module.exports = router;
 
