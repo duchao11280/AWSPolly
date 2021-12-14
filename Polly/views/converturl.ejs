@@ -13,8 +13,7 @@
             position: static;
             border: 3px solid #73AD21;
             background-color: powderblue;
-
-        }           
+}
         table.result{
             margin:10;
         }
@@ -23,7 +22,7 @@
 <body>
     <div class="container">
         <div class="title" >
-            <div style="text-align: center; padding-top: 10px;">Chuyển đổi text thành giọng nói</div>
+            <div style="text-align: center; padding-top: 10px;">Chuyển đổi nội dung của URL thành giọng nói</div>
         </div>
         <table>
             <tbody>            
@@ -85,18 +84,18 @@
         </table>
         <table border ="1">
             <td>
-                <textarea id='textconvert' rows="8" cols="50"></textarea>
+                <textarea id='urlInput' rows="8" cols="50"></textarea>
             </td>
             <td>
                 <button onclick="convert()">Convert</button>
             </td>
 
         </table>
-        <a href='/url' > Convert URL</a>
-        <table border="1" style="margin-top: 40px;">
+        <a href='/' > Convert Text</a>
+        <table border="1" style="margin-top: 40px;">>
             <thead>
                 <td style="width: 280px; text-align: center;">
-                    Văn bản
+                    Đường dẫn
                 </td>
                 <td style="width: 100px; text-align: center;">
                     Giọng nói
@@ -110,25 +109,42 @@
     </div>
 
     <script language="javascript">
+        function validURL(str) {
+            var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+                '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+                '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+                '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+            return !!pattern.test(str);
+        }
         function convert(){
             var Voice = document.getElementById("Voice").value;
             var Language = document.getElementById("Language").value;
-            var Text = document.getElementById("textconvert").value;
-            console.log(Voice, Language, Text);
+            var urlInput = document.getElementById("urlInput").value;
+            if (urlInput.substring(0,7) != 'http://' 
+                && urlInput.substring(0,8) != 'https://' && validURL(urlInput) == false){
+                    alert("Vui lòng nhập đường dẫn");
+                    return;
+            }
             $.ajax({
-                url: '/convert',
+                url: '/converturl',
                 method: 'POST',
                 data:{
-                    Text: Text,
+                    urlInput: urlInput,
                     VoiceId: Voice,
                     Language: Language
                 },
                 success: function(res){
-                    $('#history').append('<tr><td style="word-wrap:break-word">'+ Text+' </td>'+
+                    $('#history').append('<tr><td style="word-wrap:break-word">'+ urlInput+' </td>'+
                 '<td><audio controls id="'+res.urlVoice+'"><source src="../voice/'+res.urlVoice+'" type="audio/mpeg"></audio></td>'+
                     '</tr>')
                     document.getElementById(res.urlVoice).play();
+                },
+                error: function (res){
+                    alert("Xảy ra lỗi!");
                 }
+                
             })
         }
     </script>
