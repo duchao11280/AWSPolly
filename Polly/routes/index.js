@@ -10,9 +10,9 @@ const { JSDOM } = jsdom;
 //Tao client polly
 const Polly = new AWS.Polly({
 	region: 'us-east-1',
-	secretAccessKey: 'UjQT2N9W8dayxllo+R9a9plu5o9ArRTN9aKXoa8/',
-	accessKeyId: 'ASIAQLGDQYLX2O7BDSJ2',
-	sessionToken: 'FwoGZXIvYXdzEIL//////////wEaDJhqWoeTzlS/nGbWzCLPAV43G/Yyo6IKlcBTWowHtJSZdf9NefVj4TojZgLlCpGdMeXMuYWOSNh9j4BajA/HpsXdipGu7uqeiHx49mbHbYBpKfuwkAsS3wIKE44ajy20c86w/6hDs2Eh1bBrodrq91zRIZZER9vVz+MKEm7aZ+u3ba1J8KRPkBtcJ+4+FNrW09TDMr0x+gkwhbevTStpczjaUGgp6OSvdOK4HybTnSpmivloN68rV6oFDNAGo5LWUvJm7zUkrHUZHRWePINSElzktKs/FLF+3nRhqRaVUSi7teGNBjItj9dwcd6gqJuB/z9YUIhlg1cNInzgOzfEJXSxJze26R1IN/5wVb6wi04QiHjk'
+	secretAccessKey: 'W07tHvdeftT+3zxsF8L7uL2hsNWptUHTXf/PBcGm',
+	accessKeyId: 'ASIAQLGDQYLXVGI5QEVP',
+	sessionToken: 'FwoGZXIvYXdzEIf//////////wEaDI98mlK0s3ZlcPQcsyLPAQCW17VBg8rZkzWJEHvW12kAJNjNAfeZEvpDqdBOmA++1kmtRw44emEv0pc4UWcujaaGmJoBp3LyMltUXx31LFvwnCqRPSaVT3FPvESER0IqrDPtEFl4T4IKR6FyfC9dz/pj30aoqC8B0bo+I7tOkJPEMorbfV5+lQAYck6y/rwu6R7rN7Q2FQ9LUjhAFQEGgToRauOhjEeDsYcS6SO0gAZGu2Y9oQbqq2j+K276sFUL5JQm4uU3DnR+ueqJalPb7wfRO6lYaFDmVrEm3vtejiiyvuKNBjItp2r3/OKuxJFDhXLtgHW+usFrDswaGU3uQrowUPPRDTMQVPDqSqZZI6CEB2S2'
 })
 
 /* GET home page. */
@@ -30,20 +30,20 @@ router.get('/voice/:fileName', function (req, res) {
 })
 router.post("/converturl", function (req, res) {
 	axios.get(req.body.urlInput)
-		.then((response)=>{
+		.then((response) => {
 			const dom = new JSDOM(response.data)
 			const title = dom.window.document.title
 			const pHTML = dom.window.document.querySelectorAll('p')
 			var content = '';
-			for(var i = 0; i < pHTML.length; i++){
-				if(pHTML[i].textContent !== undefined){
+			for (var i = 0; i < pHTML.length; i++) {
+				if (pHTML[i].textContent !== undefined) {
 					content = content + ' ' + pHTML[i].textContent;
 				}
-				
+
 			}
 			let text = title + " " + content;
 			console.log(text.length)
-			var data= {
+			var data = {
 				Text: text,
 				OutputFormat: "mp3",
 				VoiceId: req.body.VoiceId,
@@ -64,14 +64,14 @@ router.post("/converturl", function (req, res) {
 						}
 						else {
 							res.json({ urlVoice: `${fileName}.mp3` })
-		
+
 						}
 					})
 				}
 			})
 		})
-		.catch((err)=>{console.log(err)})
-	
+		.catch((err) => { console.log(err) })
+
 })
 // convert Text
 router.post("/convert", function (req, res) {
