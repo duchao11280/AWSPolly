@@ -1,5 +1,8 @@
 # Project AWS Polly 
 
+
+## Require: 
+  Node version v14 or lastest
 ## Installation
 - Clone git:  git clone https://github.com/duchao11280/AWSPolly.git
   - In terminal: 
@@ -26,3 +29,11 @@
       - Press <b>ESC</b> and type <b>:wq</b> to quit.
     - npm start
 
+## If your node is in the old version, please update:
+  Open terminal and type:
+   - npm i -g n
+   - mkdir ~/.local
+   - N_PREFIX=$HOME/.local n stable
+   - export PATH="$HOME/.local/bin:$PATH"
+  
+  Now, check your version: node --version
